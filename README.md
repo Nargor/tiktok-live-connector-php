@@ -1,4 +1,4 @@
-# tiktok-live-poll (PHP port — MVP)
+# tiktok-live-connector-php (PHP port — MVP)
 
 A **minimal** PHP port of [tiktok-live-connector](https://github.com/zerodytrash/TikTok-Live-Connector) (Node.js).
 Built for **PHP 8.2+** with ReactPHP + Ratchet/Pawl. Receives `chat`, `gift`, and `like` events from a TikTok LIVE room in realtime.
@@ -24,7 +24,7 @@ member/social/follow/share/subscribe/envelope/question/linkMic*, `sendMessage()`
 ## Install
 
 ```bash
-composer require nargor/tiktok-live-poll
+composer require nargor/tiktok-live-connector-php
 ```
 
 Requires `ext-json`, `ext-mbstring`, `ext-zlib`, `ext-sockets`.

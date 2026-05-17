@@ -34,14 +34,14 @@ php -v
 ## การติดตั้ง
 
 ```bash
-composer require nargor/tiktok-live-poll
+composer require nargor/tiktok-live-connector-php
 ```
 
 หรือ clone repo มาใช้ตรงๆ:
 
 ```bash
-git clone https://github.com/nargor/tiktok-live-poll.git
-cd tiktok-live-poll
+git clone https://github.com/nargor/tiktok-live-connector-php.git
+cd tiktok-live-connector-php
 composer install
 ```
 
