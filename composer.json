@@ -1,5 +1,5 @@
 {
-    "name": "nargor/tiktok-live-poll",
+    "name": "nargor/tiktok-live-connector-php",
     "description": "PHP port of tiktok-live-connector. Receive TikTok LIVE chat / gift / like events in realtime via the Webcast push service.",
     "type": "library",
     "license": "MIT",
