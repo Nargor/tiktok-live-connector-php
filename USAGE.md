@@ -31,6 +31,34 @@ php -v
 # ต้องขึ้น PHP 8.2.x หรือสูงกว่า
 ```
 
+### รองรับ OS อะไรบ้าง
+
+| OS | สถานะ | หมายเหตุ |
+|---|---|---|
+| **Linux** | ✅ ใช้งานได้เต็มที่ | แนะนำเปิด `ext-pcntl` เพื่อให้ `Ctrl+C` หยุดสุภาพ |
+| **macOS** | ✅ ใช้งานได้เต็มที่ | เหมือน Linux |
+| **Windows 10/11** | ✅ ใช้งานได้เต็มที่ | ไม่มี `pcntl` — ตัวอย่างจะ fallback ไปใช้ `sapi_windows_set_ctrl_handler` อัตโนมัติ |
+
+**โน้ตสำหรับ Windows:** ถ้ารันแล้วเจอ error เกี่ยวกับ socket ให้เปิด extension เพิ่ม
+ในไฟล์ `php.ini`:
+
+```ini
+extension=sockets
+extension=mbstring
+extension=openssl
+```
+
+ดูที่อยู่ของ `php.ini` ด้วย:
+
+```powershell
+php --ini
+```
+
+แล้ว restart shell ใหม่หลังแก้
+
+ตัว library ไม่มีโค้ดที่เฉพาะ OS เลย — มีแค่ตัวอย่าง CLI ที่
+[`examples/chat-reader.php`](examples/chat-reader.php) ดักสัญญาณ `Ctrl+C` ตาม OS อัตโนมัติ
+
 ## การติดตั้ง
 
 ```bash

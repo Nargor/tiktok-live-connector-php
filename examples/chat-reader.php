@@ -61,15 +61,24 @@ $conn->connect()->then(
     },
 );
 
-pcntl_async_signals(true);
-foreach ([SIGINT, SIGTERM] as $sig) {
-    if (defined((string) $sig)) {
-        pcntl_signal($sig, function () use ($conn): void {
-            echo "Caught signal — disconnecting.\n";
-            $conn->disconnect();
-            Loop::get()->stop();
-        });
+// Cross-platform graceful shutdown.
+$shutdown = function () use ($conn, $loop): void {
+    echo "\nShutting down — disconnecting.\n";
+    $conn->disconnect();
+    $loop->stop();
+};
+
+if (function_exists('pcntl_async_signals')) {
+    // Linux / macOS
+    pcntl_async_signals(true);
+    foreach (['SIGINT', 'SIGTERM'] as $sigName) {
+        if (defined($sigName)) {
+            pcntl_signal(constant($sigName), $shutdown);
+        }
     }
+} elseif (function_exists('sapi_windows_set_ctrl_handler')) {
+    // Windows
+    sapi_windows_set_ctrl_handler($shutdown);
 }
 
 $loop->run();

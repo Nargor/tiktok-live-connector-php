@@ -46,6 +46,18 @@ composer require nargor/tiktok-live-connector-php
 
 Requires **PHP 8.2+** with extensions: `ext-json`, `ext-mbstring`, `ext-zlib`, `ext-sockets`.
 
+### Platform support
+
+| OS                 | Status            | Notes |
+|--------------------|-------------------|-------|
+| Linux              | ✅ Fully supported | `ext-pcntl` recommended for graceful Ctrl+C in CLI scripts. |
+| macOS              | ✅ Fully supported | Same as Linux. |
+| Windows 10 / 11    | ✅ Fully supported | `pcntl` is not available; `sapi_windows_set_ctrl_handler` is used instead. Make sure `extension=sockets` is enabled in `php.ini` — it ships with PHP for Windows but is sometimes commented out. |
+
+The library code itself contains no OS-specific calls. Only the example CLI in
+[`examples/chat-reader.php`](examples/chat-reader.php) does graceful-shutdown signal wiring,
+and it auto-detects the platform.
+
 2. **Create your first TikTok LIVE chat connection**
 
 ```php
