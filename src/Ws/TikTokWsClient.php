@@ -128,9 +128,18 @@ final class TikTokWsClient extends EventEmitter
             return;
         }
 
+        // Only "msg" and "im_enter_room_resp" frames carry a ProtoMessageFetchResult.
+        // Everything else (heartbeat ack, control frames, …) is silently ignored —
+        // decoding them as fetch-results would produce harmless-but-noisy
+        // "Truncated length-delimited field" errors.
+        if (!in_array($frame['payloadType'], ['msg', 'im_enter_room_resp'], true)) {
+            return;
+        }
+
         try {
             $fetchResult = Codec::decodeFetchResult($payload);
         } catch (\Throwable $e) {
+            // Don't kill the connection — emit error but keep listening.
             $this->emit('error', [$e]);
             return;
         }

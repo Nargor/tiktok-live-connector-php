@@ -24,7 +24,11 @@ if ($username === null) {
 $loop = Loop::get();
 // SIGN_API_KEY env var is picked up automatically if set.
 // Without it, EulerStream's free tier is used (rate-limited).
-$conn = new TikTokLiveConnection($username, $loop);
+$conn = new TikTokLiveConnection($username, $loop, [
+    // Skip the chat history bundled with the sign response — the WebSocket
+    // replays it anyway, so leaving this true would print every old line twice.
+    'processInitialData' => false,
+]);
 
 $conn->on(WebcastEvent::CHAT, function (array $msg): void {
     $user = $msg['user']['uniqueId'] ?? ($msg['user']['nickname'] ?? '?');

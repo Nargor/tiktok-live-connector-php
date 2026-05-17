@@ -118,6 +118,7 @@ To create a new `TikTokLiveConnection` object the following parameters can be sp
 | `disableEulerFallbacks`  | `false` | Disable the EulerStream fallback used when HTML/API scraping fails to resolve room id. |
 | `fetchRoomInfoOnConnect` | `true`  | Fetch room info on `connect()`. Prevents connection to offline rooms. |
 | `connectWithUniqueId`    | `false` | Let EulerStream resolve the room id from `uniqueId` directly (skips local scraping). Useful for low-quality IPs that get captcha'd. |
+| `processInitialData`     | `true`  | Emit events for the chat history bundled with the sign response. The WebSocket usually replays the same history on connect, so set this to `false` if you only want realtime events. |
 
 ### Example with options
 

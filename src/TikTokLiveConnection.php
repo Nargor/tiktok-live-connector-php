@@ -71,6 +71,11 @@ final class TikTokLiveConnection extends EventEmitter
             'disableEulerFallbacks' => false,
             'fetchRoomInfoOnConnect' => true,
             'connectWithUniqueId' => false,
+            // When true (Node lib default), historical messages from /webcast/fetch
+            // and the first WebSocket frame both fire — which TikTok re-delivers, so
+            // you see each old chat twice. Set false to suppress the HTTP-fetched
+            // batch and only stream realtime.
+            'processInitialData' => true,
         ], $options);
 
         // Mirror the Node lib: if caller didn't pass a key, fall back to the
@@ -143,9 +148,13 @@ final class TikTokLiveConnection extends EventEmitter
                 throw new \RuntimeException('No roomId resolved after signing.');
             }
 
-            // Process initial fetch messages.
-            foreach ($signed['messages'] as $msg) {
-                $this->dispatchInner($msg['type'], $msg['payload']);
+            // Process initial fetch messages (the history TikTok bundles with the
+            // signing response). The first WebSocket frame usually replays them
+            // again, so callers may disable this to avoid duplicate output.
+            if ($this->options['processInitialData']) {
+                foreach ($signed['messages'] as $msg) {
+                    $this->dispatchInner($msg['type'], $msg['payload']);
+                }
             }
 
             // 3) Open the WebSocket.
