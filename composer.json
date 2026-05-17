@@ -1,0 +1,34 @@
+{
+    "name": "nargor/tiktok-live-poll",
+    "description": "PHP port of tiktok-live-connector. Receive TikTok LIVE chat / gift / like events in realtime via the Webcast push service.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["tiktok", "tiktok-live", "webcast", "chat", "livestream", "websocket"],
+    "require": {
+        "php": ">=8.2",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-zlib": "*",
+        "ext-sockets": "*",
+        "guzzlehttp/guzzle": "^7.8",
+        "ratchet/pawl": "^0.4.1",
+        "react/event-loop": "^1.5",
+        "react/promise": "^3.1",
+        "evenement/evenement": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "TikTokLive\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TikTokLive\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
