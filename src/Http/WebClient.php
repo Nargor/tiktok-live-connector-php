@@ -43,8 +43,18 @@ final class WebClient
     ) {
         $this->cookieJar = new CookieJar();
         $this->clientParams = array_merge(Config::defaultClientParams(), $extraClientParams);
+
+        // Allow env overrides — same names as the upstream Node lib.
+        if ($signApiKey === null) {
+            $envKey = getenv('SIGN_API_KEY');
+            $signApiKey = is_string($envKey) && $envKey !== '' ? $envKey : null;
+        }
+        if ($signApiBase === null) {
+            $envBase = getenv('SIGN_API_URL');
+            $signApiBase = is_string($envBase) && $envBase !== '' ? $envBase : Config::SIGN_API_BASE;
+        }
         $this->signApiKey = $signApiKey;
-        $this->signApiBase = $signApiBase ?? Config::SIGN_API_BASE;
+        $this->signApiBase = $signApiBase;
 
         $this->http = new Client([
             'timeout' => $timeoutSeconds,
